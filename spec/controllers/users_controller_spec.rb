@@ -20,10 +20,24 @@ describe UsersController do
   end
 
   describe "GET show" do
+    before :each do
+      @user = Factory(:user)
+    end
+
     it "assigns the requested user as @user" do
       User.stub(:find).with("37") { mock_user }
       get :show, :id => "37"
       assigns(:user).should be(mock_user)
+    end
+
+    it "should be successful" do
+      get :show, :id => @user
+      response.should be_success
+    end
+
+    it "should have a profile image" do
+      get :show, :id => @user
+      response.should have_selector("h1>img", :class => "gravatar")
     end
   end
 

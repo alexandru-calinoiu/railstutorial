@@ -30,6 +30,8 @@ gem 'sqlite3'
 #   gem 'webrat'
 # end
 
+gem "gravatar_image_tag", "1.0.0"
+
 group :development do
   gem 'rspec-rails', '2.5.0'
   gem 'annotate-models', '1.0.4'
@@ -39,4 +41,5 @@ group :test do
   gem 'spork', '0.9.0.rc4'
   gem 'webrat', '0.7.3'
   gem 'webrat-rspec-rails', '0.1.1'
+  gem 'factory_girl_rails', '1.1.beta1'
 end
