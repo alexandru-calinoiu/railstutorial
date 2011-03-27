@@ -62,31 +62,32 @@ describe UsersController do
   end
 
   describe "POST create" do
-    describe "with valid params" do
-      it "assigns a newly created user as @user" do
-        User.stub(:new).with({'these' => 'params'}) { mock_user(:save => true) }
-        post :create, :user => {'these' => 'params'}
-        assigns(:user).should be(mock_user)
+    describe "with valid arguments" do
+      before :each do
+        @attr = { :name => "", :email => "", :password => "", :password_confirmation => "" }
       end
 
-      it "redirects to the created user" do
-        User.stub(:new) { mock_user(:save => true) }
-        post :create, :user => {}
-        response.should redirect_to(user_url(mock_user))
+      it "should not create a user" do
+        lambda do
+          post :create, :user => @attr
+        end.should_not change(User, :count)
+      end
+
+      it "should have a right title" do
+        post :create, :user => @attr
+        response.should have_selector("title", :content => "Sign up")
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved user as @user" do
-        User.stub(:new).with({'these' => 'params'}) { mock_user(:save => false) }
-        post :create, :user => {'these' => 'params'}
-        assigns(:user).should be(mock_user)
+    describe "with valid arguments" do
+      before :each do
+        @attr = { :name => "test", :email => "testo@test.com", :password => "123456", :password_confirmation => "123456" }
       end
 
-      it "re-renders the 'new' template" do
-        User.stub(:new) { mock_user(:save => false) }
-        post :create, :user => {}
-        response.should render_template("new")
+      it "should crate a new user" do
+        lambda do
+          post :create, :user => @attr
+        end.should change(User, :count).by(1)
       end
     end
   end

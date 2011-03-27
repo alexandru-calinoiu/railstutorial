@@ -10,6 +10,13 @@
 <div class="container">
   <%= render 'layouts/header' %>
   <section class="round">
+    <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+        <%= content_tag(:div, value, :class => "flash #{key}", :id => "notice_#{key}") %>
+        <%= content_tag :script, :type => "text/javascript" do -%>
+            setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+        <% end %>
+    <% end %>
     <%= yield %>
   </section>
   <%= render 'layouts/footer' %>
