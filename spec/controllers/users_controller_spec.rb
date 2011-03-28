@@ -62,7 +62,7 @@ describe UsersController do
   end
 
   describe "POST create" do
-    describe "with valid arguments" do
+    describe "with invalid arguments" do
       before :each do
         @attr = { :name => "", :email => "", :password => "", :password_confirmation => "" }
       end
@@ -88,6 +88,11 @@ describe UsersController do
         lambda do
           post :create, :user => @attr
         end.should change(User, :count).by(1)
+      end
+
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
     end
   end

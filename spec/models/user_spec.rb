@@ -132,4 +132,18 @@ describe User do
       end
     end
   end
+
+  describe "authenticate_with_salt" do
+    before :each do
+      @user = Factory(:user)
+    end
+
+    it "should return user for valid salt" do
+      User.authenticate_with_salt(@user.id, @user.salt).should_not be_nil
+    end
+
+    it "should return nil for invalid salt" do
+      User.authenticate_with_salt(@user.id, nil).should be_nil
+    end
+  end
 end
