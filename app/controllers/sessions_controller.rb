@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
     else
       sign_in(user)
       respond_to do |format|
-        format.html { redirect_to user }
+        format.html { redirect_back_or user }
       end
     end
   end
@@ -27,5 +27,4 @@ class SessionsController < ApplicationController
       format.html { redirect_to root_path }
     end
   end
-
 end
